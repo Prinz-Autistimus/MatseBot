@@ -1,15 +1,39 @@
+import java.util.Arrays;
+
 public enum Company {
 
-    INFORM ("1017151906096881684", "INFORM GmbH"),
-    RWTH_AACHEN_INSTITUTE ("1017151984136114226", "RWTH Aachen (Institute)"),
-    DSA ("1017152035172384859", "DSA Daten- und Systemtechnik GmbH");
+    INFORM ("", "INFORM GmbH"),
+    RWTH_AACHEN_INSTITUTE ("", "RWTH Aachen (Institute)"),
+    DSA ("", "DSA Daten- und Systemtechnik GmbH"),
+    COMPLINGUA ("", "Complingua GmbH");
 
-    private final String roleID;
+    private String roleID;
     private final String dispalyName;
 
     Company(String roleID, String displayName){
         this.roleID = roleID;
         this.dispalyName = displayName;
+    }
+
+    public String getRoleID(){
+        return roleID;
+    }
+
+    public String getDispalyName(){
+        return dispalyName;
+    }
+
+    public void setRoleID(String newRoleID){
+        roleID = newRoleID;
+    }
+
+    public static Company getByName(String name){
+        for(Company c : Company.values()){
+            if(name.equals(c.getDispalyName())){
+                return c;
+            }
+        }
+        return null;
     }
 
 }
