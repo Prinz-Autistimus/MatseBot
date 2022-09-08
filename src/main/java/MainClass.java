@@ -102,7 +102,7 @@ public class MainClass {
                 }
             }
 
-            server.createRole().setName(c.getDisplayName()).setHoisted(true).setColor(companyColor).queueAfter(50, TimeUnit.MILLISECONDS);
+            server.createRole().setName(c.getDisplayName()).setHoisted(true).setColor(nameColor).queueAfter(50, TimeUnit.MILLISECONDS);
             System.out.println("Rolle erstellt: " + c.getDisplayName());
 
 
