@@ -47,13 +47,12 @@ public class MainClass {
         Guild matseServer = null;
         try {
             matseServer = bot.awaitReady().getGuildById("1017119618319536168");
+            if(matseServer != null){
+                generateRoles(matseServer);
+            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
-        generateRoles(matseServer);
-
-
 
     }
 
@@ -65,7 +64,7 @@ public class MainClass {
         for(Company c : Company.values()){
 
             try {
-                Thread.sleep(10);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
