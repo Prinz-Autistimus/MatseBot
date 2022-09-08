@@ -8,21 +8,25 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Scanner;
 
 public class MainClass {
 
-    private static final String TOKEN = "MTAxNzEyMDMxMzA3NjYxMzE3MA.GNqA_f.sZDv06wFE2uyG3stTzIZEu1SQa2nwmflCfzxXQ";
+    private static String token = "";
 
     private static final Color companyColor = new Color(130, 130, 22);
 
     public static void main(String[] args) throws LoginException, IOException {
 
+        Scanner sc = new Scanner(new File("O:/Workspaces/MatseBot/src/token.tkn"));
+        token = sc.nextLine();
+
         final var companyRoleIDs = new ArrayList<String>();
 
-        JDABuilder jdaBuilder = JDABuilder.createDefault(TOKEN);
+        JDABuilder jdaBuilder = JDABuilder.createDefault(token);
 
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
         jdaBuilder.setActivity(Activity.listening("Java Code Conventions"));
