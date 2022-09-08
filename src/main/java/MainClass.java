@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +15,8 @@ import java.util.Arrays;
 public class MainClass {
 
     private static final String TOKEN = "MTAxNzEyMDMxMzA3NjYxMzE3MA.GNqA_f.sZDv06wFE2uyG3stTzIZEu1SQa2nwmflCfzxXQ";
+
+    private static final Color companyColor = new Color(130, 130, 22);
 
     public static void main(String[] args) throws LoginException, IOException {
 
@@ -39,25 +42,39 @@ public class MainClass {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        var roles = matseServer.getRoles();
 
+        generateRoles(matseServer);
+
+
+
+    }
+
+    public static void generateRoles(Guild server){
+
+        var roles = server.getRoles();
 
         outer:
         for(Company c : Company.values()){
 
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
             for(Role r : roles){
                 if(r.getName().equals(c.getDisplayName())){
                     c.setRoleID(r.getId());
+                    r.getManager().setHoisted(true).setColor(companyColor).queue();
                     continue outer;
                 }
             }
 
-            matseServer.createRole().setName(c.getDisplayName()).queue();
+            server.createRole().setName(c.getDisplayName()).setHoisted(true).setColor(companyColor).queue();
+            System.out.println("Rolle erstellt: " + c.getDisplayName());
 
 
         }
-
-
     }
 
 }
