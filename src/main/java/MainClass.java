@@ -20,13 +20,32 @@ public class MainClass {
 
     private static String token = "";
 
-    private static final Color companyColor = new Color(130, 130, 22);
+    private static Color companyColor;
+    private static String[] messageIDs = new String[9];
+
+    private static File tokenFile;
+    private static File configFile;
 
     public static void main(String[] args) throws LoginException, IOException {
-        JFileChooser c = new JFileChooser();
-        c.showOpenDialog(null);
-        Scanner sc = new Scanner(c.getSelectedFile());
+        JFileChooser fc = new JFileChooser();
+        Scanner sc;
+
+        fc.showOpenDialog(null);
+        fc.setDialogTitle("Choose Token File");
+        tokenFile = fc.getSelectedFile();
+        sc = new Scanner(tokenFile);
         token = sc.nextLine();
+
+        fc.setDialogTitle("Choose Config File");
+        fc.showOpenDialog(null);
+        configFile = fc.getSelectedFile();
+        sc = new Scanner(configFile);
+        companyColor = Color.decode(sc.nextLine());
+
+        for(int i = 0; i < 9; i++){
+            messageIDs[i] = sc.nextLine();
+        }
+
 
         final var companyRoleIDs = new ArrayList<String>();
 
