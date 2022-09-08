@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class ReactListener extends ListenerAdapter {
     private String[] messageIDs;
@@ -17,12 +18,13 @@ public class ReactListener extends ListenerAdapter {
     @Override
     public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event) {
         super.onMessageReactionAdd(event);
+
         for (int i = 0; i < messageIDs.length; i++){
             if (messageIDs[i].equals("" + event.getMessageId())){
                 try {
                     int id = 10 * i + (event.getEmoji().toString().charAt(16)) - 48;
-                    event.getMember().getRoles().add(server.getRoleById(Company.values()[id].getRoleID()));
-                } catch (IndexOutOfBoundsException e){
+                    server.addRoleToMember(event.getMember(), server.getRoleById(Company.values()[id].getRoleID())).queueAfter(50, TimeUnit.MILLISECONDS);
+                } catch (Exception e){
                     break;
                 }
             }
