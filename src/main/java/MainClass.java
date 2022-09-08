@@ -61,6 +61,7 @@ public class MainClass {
         bot.addEventListener(new MessageReceiver());
         bot.addEventListener(new JoinListener());
         bot.addEventListener(new RoleAddListener());
+        String[] messageIDs = {"1017401457877712937"}; //TODO
 
 
         Guild matseServer = null;
@@ -72,7 +73,7 @@ public class MainClass {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
+        bot.addEventListener(new ReactListener(messageIDs, matseServer));
     }
 
     public static void generateRoles(Guild server){
