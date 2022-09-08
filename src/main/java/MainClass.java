@@ -7,12 +7,9 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Arrays;
 
 public class MainClass {
 
@@ -33,10 +30,15 @@ public class MainClass {
         JDA bot = jdaBuilder.build();
         bot.addEventListener(new MessageReceiver());
         bot.addEventListener(new JoinListener());
+        bot.addEventListener(new RoleAddListener());
 
 
-        //FIXME Cant retreive Guildobject
-        Guild matseServer = bot.getGuildById();
+        Guild matseServer = null;
+        try {
+            matseServer = bot.awaitReady().getGuildById("1017119618319536168");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         var roles = matseServer.getRoles();
 
 
@@ -44,19 +46,15 @@ public class MainClass {
         for(Company c : Company.values()){
 
             for(Role r : roles){
-                if(r.getName().equals(c.getDispalyName())){
+                if(r.getName().equals(c.getDisplayName())){
                     c.setRoleID(r.getId());
                     continue outer;
                 }
             }
 
-            matseServer.createRole().setName(c.getDispalyName()).queue();
-            c.setRoleID(matseServer.getRoleById(c.getDispalyName()).getId());
+            matseServer.createRole().setName(c.getDisplayName()).queue();
 
-        }
 
-        for(Company c : Company.values()){
-            System.out.println("Rollen Name: " + c.getDispalyName() + ", ID: " + c.getRoleID());
         }
 
 
