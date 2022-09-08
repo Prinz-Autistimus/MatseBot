@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -20,8 +21,9 @@ public class MainClass {
     private static final Color companyColor = new Color(130, 130, 22);
 
     public static void main(String[] args) throws LoginException, IOException {
-
-        Scanner sc = new Scanner(new File("O:/Workspaces/MatseBot/src/token.tkn"));
+        JFileChooser c = new JFileChooser();
+        c.showOpenDialog(null);
+        Scanner sc = new Scanner(c.getSelectedFile());
         token = sc.nextLine();
 
         final var companyRoleIDs = new ArrayList<String>();
